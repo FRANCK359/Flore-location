@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmation de paiement</title>
+</head>
+<body style="font-family: Arial, sans-serif;">
+<h2>Bonjour <span th:text="${firstName}"></span>,</h2>
+<p>Paiement confirmé pour la réservation <strong>#<span th:text="${reservationNumber}"></span></strong>.</p>
+<p>Montant : <strong th:text="${totalAmount}"></strong></p>
+<p>Merci pour votre confiance !</p>
+<p th:text="'© ' + ${currentYear} + ' Location Événement'"></p>
+</body>
+</html>

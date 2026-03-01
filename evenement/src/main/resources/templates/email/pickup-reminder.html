@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Rappel de retrait</title>
+</head>
+<body style="font-family: Arial, sans-serif;">
+<h2>Bonjour <span th:text="${firstName}"></span>,</h2>
+<p>Rappel : votre réservation <strong>#<span th:text="${reservationNumber}"></span></strong> est à retirer demain.</p>
+<p>Date : <strong th:text="${pickupDate}"></strong></p>
+<p>N'oubliez pas de vous munir d'une pièce d'identité.</p>
+<p th:text="'© ' + ${currentYear} + ' Location Événement'"></p>
+</body>
+</html>

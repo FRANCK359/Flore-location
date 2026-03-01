@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Bienvenue</title>
+</head>
+<body style="font-family: Arial, sans-serif;">
+<h2>Bienvenue <span th:text="${firstName}"></span> !</h2>
+<p>Merci de vous être inscrit sur Location Événement.</p>
+<p>Vous pouvez maintenant parcourir nos produits et faire vos réservations.</p>
+<a th:href="${loginUrl}" style="background-color: #4CAF50; color: white; padding: 10px 20px; text-decoration: none;">Se connecter</a>
+<p th:text="'© ' + ${currentYear} + ' Location Événement'"></p>
+</body>
+</html>

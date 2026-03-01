@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: event-postgres
+    environment:
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+      POSTGRES_DB: ${DB_NAME:-event_location_db}
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - event-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-postgres}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build: .
+    container_name: event-app
+    env_file:
+      - .env
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:${DB_PORT:-5432}/${DB_NAME:-event_location_db}
+      SPRING_DATASOURCE_USERNAME: ${DB_USER:-postgres}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD:-postgres}
+      SPRING_PROFILES_ACTIVE: docker
+
+      JWT_SECRET: ${JWT_SECRET}
+
+      SPRING_MAIL_HOST: ${SPRING_MAIL_HOST:-${MAIL_HOST:-smtp.gmail.com}}
+      SPRING_MAIL_PORT: ${SPRING_MAIL_PORT:-${MAIL_PORT:-587}}
+      SPRING_MAIL_USERNAME: ${SPRING_MAIL_USERNAME:-${MAIL_USERNAME:-}}
+      SPRING_MAIL_PASSWORD: ${SPRING_MAIL_PASSWORD:-${MAIL_PASSWORD:-}}
+
+      APP_EMAIL_FROM: ${APP_EMAIL_FROM:-${MAIL_FROM:-noreply@localhost}}
+      APP_EMAIL_FROM_NAME: ${APP_EMAIL_FROM_NAME:-${MAIL_FROM_NAME:-Location Événement}}
+      APP_BASE_URL: ${APP_BASE_URL:-http://localhost:${APP_PORT:-8080}}
+    ports:
+      - "${APP_PORT:-8080}:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - event-network
+
+volumes:
+  postgres-data:
+
+networks:
+  event-network:
+    driver: bridge

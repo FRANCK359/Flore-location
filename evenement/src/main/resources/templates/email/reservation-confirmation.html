@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmation de réservation</title>
+</head>
+<body style="font-family: Arial, sans-serif;">
+<h2>Bonjour <span th:text="${firstName}"></span>,</h2>
+<p>Votre réservation <strong>#<span th:text="${reservationNumber}"></span></strong> est confirmée.</p>
+
+<h3>Détails :</h3>
+<ul>
+    <li>Date de retrait : <span th:text="${pickupDate}"></span></li>
+    <li>Date de retour : <span th:text="${returnDate}"></span></li>
+    <li>Montant total : <span th:text="${totalAmount}"></span></li>
+</ul>
+
+<p>Présentez-vous à notre magasin le jour du retrait.</p>
+<a th:href="${reservationUrl}" style="background-color: #4CAF50; color: white; padding: 10px 20px; text-decoration: none;">Voir ma réservation</a>
+<p th:text="'© ' + ${currentYear} + ' Location Événement'"></p>
+</body>
+</html>

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Réservation en attente</title>
+</head>
+<body style="font-family: Arial, sans-serif;">
+<h2>Bonjour <span th:text="${firstName}"></span>,</h2>
+<p>Votre réservation <strong>#<span th:text="${reservationNumber}"></span></strong> est en attente de confirmation.</p>
+<p>Nous vous confirmerons sa disponibilité par email.</p>
+<p th:text="'© ' + ${currentYear} + ' Location Événement'"></p>
+</body>
+</html>

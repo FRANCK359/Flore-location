@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmation d'annulation</title>
+</head>
+<body style="font-family: Arial, sans-serif;">
+<h2>Bonjour <span th:text="${firstName}"></span>,</h2>
+<p>Votre réservation <strong>#<span th:text="${reservationNumber}"></span></strong> a été annulée.</p>
+<p>Nous espérons vous revoir bientôt !</p>
+<p th:text="'© ' + ${currentYear} + ' Location Événement'"></p>
+</body>
+</html>
