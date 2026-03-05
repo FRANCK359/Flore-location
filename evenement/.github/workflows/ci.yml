@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+
+      # Optionnel mais utile: accélère/fiabilise Testcontainers sur GitHub-hosted runners
+      - name: Configure Testcontainers
+        run: |
+          echo "TESTCONTAINERS_RYUK_DISABLED=false" >> $GITHUB_ENV
+          echo "DOCKER_BUILDKIT=1" >> $GITHUB_ENV
+
+      - name: Run tests (unit + integration + E2E Testcontainers)
+        working-directory: evenement
+        run: ./mvnw -U -ntp clean test
+
+      - name: Build package
+        working-directory: evenement
+        run: ./mvnw -U -ntp package -DskipTests
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: evenement/target/surefire-reports/
